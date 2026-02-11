@@ -1,80 +1,123 @@
-import './App.css'
+import { useRef } from 'react';
+import './App.css';
 
 function App() {
+  const containerRef = useRef(null);
+
+  const scrollNext = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 flex items-center justify-center relative">
-      {/* Animated Background Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating Orb 1 */}
-        <div className="absolute top-20 left-10 floating">
-          <div className="w-64 h-64 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full blur-3xl opacity-30"></div>
-        </div>
-
-        {/* Floating Orb 2 */}
-        <div className="absolute bottom-20 right-10 floating-delayed">
-          <div className="w-80 h-80 bg-gradient-to-br from-purple-500 to-pink-400 rounded-full blur-3xl opacity-25"></div>
-        </div>
-
-        {/* Floating Orb 3 */}
-        <div className="absolute top-1/2 right-1/4 floating-slow">
-          <div className="w-72 h-72 bg-gradient-to-br from-violet-500 to-indigo-400 rounded-full blur-3xl opacity-20"></div>
-        </div>
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+    <>
+      {/* Fester Hintergrund - bleibt beim Scrollen */}
+      <div className="fixed inset-0 bg-black overflow-hidden pointer-events-none">
+        {/* Raster */}
+        <div className="absolute inset-0 bg-grid opacity-30"></div>
+        
+        {/* Dynamische Formen */}
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
       </div>
 
-      {/* Main Content - Liquid Glass Card */}
-      <div className="relative z-10 w-full max-w-2xl mx-4">
-        <div className="glass-card p-12 rounded-3xl">
-          <div className="space-y-8">
-            <div className="text-center space-y-4">
-              <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-400 bg-clip-text text-transparent animate-fade-in">
-                Welcome
+      {/* Scrollbarer Content */}
+      <div 
+        ref={containerRef}
+        className="relative w-screen h-screen overflow-x-scroll overflow-y-hidden flex snap-x snap-mandatory no-scrollbar text-white"
+      >
+        
+        {/* SCREEN 1: User */}
+        <section className="w-screen h-screen flex-shrink-0 snap-center flex items-center justify-center">
+          <div className="relative z-10 text-center px-4 max-w-2xl">
+            <div className="glass-card p-10 rounded-2xl border-t-4 border-yellow-400">
+              <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-2">
+                PARTY<span className="text-yellow-400">PENZBERG</span>
               </h1>
-              <p className="text-xl text-slate-300/80 animate-fade-in-delayed">
-                Explore the possibilities with modern web design
+              <p className="text-slate-400 text-xl mb-8">
+                Wo geht heute was? Alle Events auf einen Blick.
               </p>
-            </div>
-
-            <div className="flex flex-col gap-4 pt-4">
-              <button className="glass-button group">
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Get Started
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
+              
+              <button className="btn-neon w-full py-4 rounded-xl text-lg mb-4 flex items-center justify-center gap-2 group">
+                Zu den Events
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
               </button>
-
-              <button className="glass-button-secondary">
-                Learn More
-              </button>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-white/10">
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-cyan-400">100%</div>
-                <div className="text-sm text-slate-400">Custom</div>
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-purple-400">∞</div>
-                <div className="text-sm text-slate-400">Creative</div>
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-teal-400">⚡</div>
-                <div className="text-sm text-slate-400">Fast</div>
+              
+              <div className="text-sm text-slate-500 mt-4 flex items-center justify-center gap-2 animate-bounce cursor-pointer" onClick={scrollNext}>
+                <span>Veranstalter? Wisch nach links</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Bottom floating accent */}
-      <div className="absolute bottom-8 left-8 floating-slow opacity-50 pointer-events-none">
-        <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-red-500 rounded-full blur-2xl opacity-20"></div>
+        {/* SCREEN 2: Veranstalter */}
+        <section className="w-screen h-screen flex-shrink-0 snap-center flex items-center justify-center">
+          <div className="relative z-10 text-center px-4 max-w-2xl">
+            <div className="glass-card p-10 rounded-2xl border-r-4 border-yellow-400">
+              <h2 className="text-4xl md:text-6xl font-black mb-4 uppercase italic">
+                Für <span className="text-yellow-400">Veranstalter</span>
+              </h2>
+              <p className="text-slate-300 text-lg mb-8 leading-relaxed">
+                Deine Party verdient ein volles Haus. 
+                Trag dein Event kostenlos ein und erreiche ganz Penzberg.
+              </p>
+
+              <div className="grid gap-4">
+                <button className="btn-neon w-full py-4 rounded-xl text-lg">
+                  Event eintragen
+                </button>
+                <button className="btn-ghost w-full py-3 rounded-xl">
+                  Login für Partner
+                </button>
+              </div>
+              
+              <div className="text-sm text-slate-500 mt-6 flex items-center justify-center gap-2 cursor-pointer" onClick={scrollNext}>
+                <span>Wer steckt dahinter?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SCREEN 3: About */}
+        <section className="w-screen h-screen flex-shrink-0 snap-center flex items-center justify-center">
+          <div className="relative z-10 px-4 max-w-4xl w-full">
+            <div className="glass-card p-8 md:p-14 rounded-3xl text-center md:text-left flex flex-col md:flex-row items-center gap-10">
+              
+              <div className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 bg-gradient-to-tr from-yellow-400 via-yellow-500 to-amber-600 rounded-full p-1 shadow-2xl shadow-yellow-900/40">
+                <div className="w-full h-full bg-black rounded-full flex items-center justify-center overflow-hidden">
+                  <span className="text-4xl">👋</span>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-4xl md:text-5xl font-bold">
+                  ABOUT <span className="text-yellow-400">US</span>
+                </h2>
+                <p className="text-slate-300 leading-relaxed">
+                  Wir sind ein kleines Team aus Penzberg. Wir lieben gute Partys, aber hassen es, nicht zu wissen, wo sie steigen. Deshalb gibt es jetzt diese Plattform.
+                </p>
+                
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  <span className="px-3 py-1 rounded-full border border-yellow-500/30 text-yellow-400 text-sm">Community First</span>
+                  <span className="px-3 py-1 rounded-full border border-yellow-500/30 text-yellow-400 text-sm">Non-Profit</span>
+                  <span className="px-3 py-1 rounded-full border border-yellow-500/30 text-yellow-400 text-sm">Penzberg Only</span>
+                </div>
+
+                <button className="btn-ghost w-full md:w-auto px-8 py-3 rounded-xl mt-2">
+                  Kontakt aufnehmen
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
       </div>
-    </div>
+    </>
   )
 }
 
