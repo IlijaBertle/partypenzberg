@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-party-pink: #ff007f;
+  --color-party-purple: #7a00ff;
+  --color-party-yellow: #facc15;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100vh;
+/* Glassmorphism Effekt */
+.glass-ui {
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Verhindert Scrollen wenn Header offen ist */
+body:has(header.h-screen) {
   overflow: hidden;
 }
 
-* {
-  box-sizing: border-box;
+/* Custom Cubic Bezier für App-Feeling */
+.cubic-bezier {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
